@@ -299,7 +299,8 @@ footer{color:var(--tinta3);font-size:13px;line-height:1.5}
       <div id="wDet"><div class="wvazio">Clique numa linha da lista para ver tudo sobre ela.</div></div></aside>
   </div>
   <footer>Dados lidos direto dos arquivos do cliente: basenpcstatdata (monstros), MopRejenData (spawns), basemapdata (mapas), baseitemdata (itens e equipamentos), npcdataSum/picdata (imagens).
-  Chance de drop = (valor+1)% por item, como o cliente sorteia (rand()%100 ≤ valor).</footer>
+  Drops: tabela de 20 itens por monstro que vem no cliente, chance = (valor+1)% como o cliente sorteia (rand()%100 ≤ valor).
+  Ela tem sobretudo materiais, poções e acessórios; o drop de armas e armaduras fica no servidor e não aparece aqui.</footer>
 </main>
 </div>
 <script>
@@ -386,7 +387,7 @@ function detalhe(t,id){
    +(e.el?`<h5>Dano elemental</h5><div class="wres">${e.el.map((v,i)=>`<div><span style="color:${ELEM[i][1]}">${ELEM[i][0]}</span>${v[0]||v[1]?faixa(...v):'—'}</div>`).join('')}</div>`:'')
    +(e.st.length?'<h5>Atributos</h5>'+lst(e.st.map(([k,v])=>`<li><span class="g">${k}</span><span class="wnum">${v>0?'+':''}${Number.isInteger(v)?fmt(v):v.toFixed(2)}</span></li>`),''):'')
    +(D.usadoEm[id]?`<h5>Usado nas builds</h5>`+lst(D.usadoEm[id].map(c=>`<li><span class="g">${link('b',c,c)}</span></li>`),''):'')
-   +`<h5>Dropado por (${(porItem[id]||[]).length})</h5>`+lst(quemDropa(id),'Nenhum monstro dropa (loja, craft, evento ou caixa).');}
+   +`<h5>Dropado por (${(porItem[id]||[]).length})</h5>`+lst(quemDropa(id),'Nenhum drop registrado nos arquivos do cliente. O drop de equipamento é decidido pelo servidor, então este item pode cair de monstros mesmo assim.');}
  else if(t=='i'&&porItem[id]){const it=D.itens[id]||{}; tt=item(id);
   h=chips([EQ[id]&&link('e',id,'Ver ficha de equipamento'),it.lv&&'Nível '+it.lv,'ID '+id])+(src('i'+id)?`<div class="wretrato" style="min-height:110px">${pic('i'+id,'')}</div>`:'')
    +`<h5>Dropado por (${porItem[id].length})</h5>`+lst(quemDropa(id),'');}
