@@ -426,7 +426,7 @@ const iconeClasse = c => c.tiers[2]?.skills.at(-1)?.id ?? c.tiers[0].skills[0].i
 function tabs(){
   $("tabs").innerHTML = D.classes.map((c,i)=>`<button class="tab" role="tab" aria-selected="${i===cls}" data-i="${i}" title="${esc(c.nome)} · tier ${c.tier}">
       <span class="ic"><img alt="" src="${D.icones[iconeClasse(c)]}"><span class="t tier${c.tier}">${c.tier}</span></span><span class="nm">${esc(c.nome)}</span></button>`).join("");
-  $("tabs").querySelectorAll(".tab").forEach(b=>b.onclick=()=>{cls=+b.dataset.i; sel=null; SITE.ir("b/"+D.classes[cls].nome)});
+  $("tabs").querySelectorAll(".tab").forEach(b=>b.onclick=()=>SITE.ir("b/"+D.classes[+b.dataset.i].nome));   // a rota troca a classe e redesenha
 }
 function render(){
   tabs();
@@ -501,7 +501,7 @@ $("bDps").onclick=()=>{build="dps"; render()};
 $("bSup").onclick=()=>{build="suporte"; render()};
 $("mFarm").onclick=()=>{modo="farm"; render()};
 $("mChefe").onclick=()=>{modo="chefe"; render()};
-window.BUILDS={temClasse:n=>D.classes.some(c=>c.nome===n), classe:n=>{const i=D.classes.findIndex(c=>c.nome===n); if(i>=0&&i!==cls){cls=i; sel=null; render()}}};
+window.BUILDS={temClasse:n=>D.classes.some(c=>c.nome===n), classe:n=>{const i=D.classes.findIndex(c=>c.nome===n); if(i>=0){if(i!==cls)sel=null; cls=i; render()}}};
 render();
 </script>
 <script>
